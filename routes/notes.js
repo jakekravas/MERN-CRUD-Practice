@@ -18,6 +18,9 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
+// @route    POST api/notes
+// @desc     Add a new note
+// @access   Private
 router.post("/",
   [auth,
     check("title", "Title is required").not().isEmpty()

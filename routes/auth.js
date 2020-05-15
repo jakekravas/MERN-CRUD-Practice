@@ -8,7 +8,9 @@ const auth = require('../middleware/auth');
 
 const User = require('../models/User');
 
-// LOGIN USER
+// @route    GET post/auth
+// @desc     Login user
+// @access   Private
 router.post("/",
   [
     check("email", "Please enter a valid email").isEmail(),
@@ -48,7 +50,9 @@ router.post("/",
   }
 )
 
-// GET LOGGED IN USER
+// @route    GET api/auth
+// @desc     Get logged in user
+// @access   Private
 router.get("/", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
