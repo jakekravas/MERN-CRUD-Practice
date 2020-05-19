@@ -1,51 +1,24 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
+import Notes from "../notes/Notes";
+import AuthContext from "../../context/auth/authContext";
+import NoteContext from "../../context/notes/noteContext";
 
 const Home = () => {
+  const authContext = useContext(AuthContext);
+  const noteContext = useContext(NoteContext);
+
+  const { getNotes } = noteContext;
+  const { user, loadUser } = authContext;
+  const { notes } = noteContext;
+  
+  useEffect(() => {
+    getNotes();
+  }, []);
+
   return (
     <div>
       <h4>All Notes</h4>
-      <div id="notes-container">
-        <div className="card">
-          <div className="card-body">
-            <h4 className="card-title">
-              Note Title
-            </h4>
-            <p className="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, error accusantium eum illo perspiciatis porro hic neque non earum nulla?</p>
-            <button className="btn btn-dark mr-1">Edit</button>
-            <button className="btn btn-danger">Delete</button>
-          </div>
-        </div>
-        <div className="card">
-          <div className="card-body">
-            <h4 className="card-title">
-              Note Title
-            </h4>
-            <p className="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, error accusantium eum illo perspiciatis porro hic neque non earum nulla?</p>
-            <button className="btn btn-dark mr-1">Edit</button>
-            <button className="btn btn-danger">Delete</button>
-          </div>
-        </div>
-        <div className="card">
-          <div className="card-body">
-            <h4 className="card-title">
-              Note Title
-            </h4>
-            <p className="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, error accusantium eum illo perspiciatis porro hic neque non earum nulla?</p>
-            <button className="btn btn-dark mr-1">Edit</button>
-            <button className="btn btn-danger">Delete</button>
-          </div>
-        </div>
-        <div className="card">
-          <div className="card-body">
-            <h4 className="card-title">
-              Note Title
-            </h4>
-            <p className="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, error accusantium eum illo perspiciatis porro hic neque non earum nulla?</p>
-            <button className="btn btn-dark mr-1">Edit</button>
-            <button className="btn btn-danger">Delete</button>
-          </div>
-        </div>
-      </div>
+      {notes ? <Notes/> : <p>No notes to display</p>}
     </div>
   )
 }

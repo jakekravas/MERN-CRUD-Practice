@@ -1,24 +1,40 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import './Bootstrap.css';
-import './App.css';
 import Navbar from "./components/layout/Navbar";
 import Home from "./components/pages/Home";
-import SignUp from './components/pages/SignUp';
-import SignIn from './components/pages/SignIn';
+import SignUp from './components/auth/SignUp';
+import SignIn from './components/auth/SignIn';
+import PrivateRoute from "./components/routing/PrivateRoutes";
+
+import AuthState from "./context/auth/AuthState";
+import NoteState from "./context/notes/NoteState";
+import setAuthToken from './utils/setAuthToken';
+
+import './Bootstrap.css';
+import './App.css';
+
+if (localStorage.token){
+  setAuthToken(localStorage.token);
+}
 
 function App() {
   return (
-    <Router>
-      <Navbar/>
-      <div className="container">
-        <Switch>
-          <Route exact path = "/" component = {Home}/>
-          <Route exact path = "/signup" component = {SignUp}/>
-          <Route exact path = "/signin" component = {SignIn}/>
-        </Switch>
-      </div>
-    </Router>
+    <AuthState>
+      <NoteState>
+        <Router>
+          <Fragment>
+            <Navbar/>
+            <div className="container">
+              <Switch>
+                <PrivateRoute exact path = "/" component = {Home}/>
+                <Route exact path = "/signup" component = {SignUp}/>
+                <Route exact path = "/signin" component = {SignIn}/>
+              </Switch>
+            </div>
+          </Fragment>
+        </Router>
+      </NoteState>
+    </AuthState>
   );
 }
 

@@ -37,7 +37,9 @@ router.post("/",
         res.status(400).json({ msg: "Invalid credentials" });
       }
 
-      jwt.sign({user}, config.get("jwtSecret"), {
+      const payload = {user: {id: user._id}}
+
+      jwt.sign(payload, config.get("jwtSecret"), {
         expiresIn: "59s"
       }, (err, token) => {
         if (err) throw err;
@@ -55,7 +57,7 @@ router.post("/",
 // @access   Private
 router.get("/", auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.user.id);
     res.json(user);
   } catch (err) {
     console.error(err.message);

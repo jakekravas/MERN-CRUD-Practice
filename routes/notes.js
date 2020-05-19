@@ -36,7 +36,7 @@ router.post("/",
       const newNote = Note({
         title,
         content,
-        user: req.user._id
+        user: req.user.id
       });
 
       const savedNote = await newNote.save();
