@@ -15,6 +15,11 @@ export default (state, action) => {
         isAuthenticated: true,
         loading: false
       }
+    case "ADD_NOTE":
+      return {
+        ...state,
+        notes: action.payload
+      }
     case "REGISTER_FAIL":
     case "LOGIN_FAIL":
     case "AUTH_ERROR":
@@ -23,7 +28,7 @@ export default (state, action) => {
       return {
         ...state,
         token: null,
-        isAuthenticated: false,
+        isAuthenticated: null,
         user: null,
         loading: false,
         error: action.payload

@@ -1,21 +1,26 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import NoteContext from "../../context/notes/noteContext";
+import AuthContext from "../../context/auth/authContext";
+import NoteItem from "./NoteItem";
 
-const Notes = () => {
+const Notes = props => {
   const noteContext = useContext(NoteContext);
-  const { notes } = noteContext;
-  console.log(notes);
+  const { notes, getNotes } = noteContext;
+
+  useEffect(() => {
+    getNotes();
+  }, []);
+
+  if (notes === null){
+    return <h5>Loading...</h5>
+  } else if (notes.length === 0){
+    return <h5>No notes to display</h5>
+  }
+
   return (
     <div id="notes-container">
       {notes.map(note => (
-      <div className="card">
-        <div className="card-body">
-          <h4 className="card-title">{note.title}</h4>
-          <p className="card-text">{note.content}</p>
-          <button className="btn btn-dark mr-1">Edit</button>
-          <button className="btn btn-danger">Delete</button>
-        </div>
-      </div>
+        <NoteItem key={note._id} note={note}/>
       ))}
     </div>
   )

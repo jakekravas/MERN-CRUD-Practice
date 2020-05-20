@@ -21,8 +21,44 @@ const NoteState = props => {
       });
     } catch (err) {
       dispatch({
-        type: "NOTES_ERROR",
-        payload: err.response.data.msg
+        type: "NOTE_ERROR",
+        payload: err.response.msg
+      });
+    }
+  };
+
+  const addNote = async formData => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+    try {
+      const res = await axios.post("/api/notes", formData, config);
+
+      dispatch({
+        type: "ADD_NOTE",
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: "NOTE_ERROR",
+        payload: err.response.msg
+      });
+    }
+  };
+
+  const deleteNote = async id => {
+    try {
+      await axios.delete(`api/notes/${id}`);
+      dispatch({
+        type: "DELETE_NOTE",
+        payload: id
+      });
+    } catch (err) {
+      dispatch({
+        type: "NOTE_ERROR",
+        payload: err.response.msg
       });
     }
   }
@@ -32,7 +68,9 @@ const NoteState = props => {
       value={{
         notes: state.notes,
         error: state.error,
-        getNotes
+        getNotes,
+        addNote,
+        deleteNote
       }}
     >
       {props.children}

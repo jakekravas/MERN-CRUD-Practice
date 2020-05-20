@@ -7,18 +7,19 @@ const Home = () => {
   const authContext = useContext(AuthContext);
   const noteContext = useContext(NoteContext);
 
-  const { getNotes } = noteContext;
+  const { getNotes, notes } = noteContext;
   const { user, loadUser } = authContext;
-  const { notes } = noteContext;
   
   useEffect(() => {
-    getNotes();
+    // getNotes();
+    loadUser();
   }, []);
 
   return (
     <div>
       <h4>All Notes</h4>
-      {notes ? <Notes/> : <p>No notes to display</p>}
+      {/* {notes ? <Notes/> : <p>No notes to display</p>} */}
+      <Notes/>
     </div>
   )
 }

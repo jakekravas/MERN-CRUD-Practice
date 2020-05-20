@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { Fragment, useContext, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/auth/authContext";
 
@@ -11,17 +11,22 @@ const Navbar = () => {
   }
 
   const linksForUser = (
-    <ul className="m-0">
-      Hello {user && user.name}
-      <Link onClick={onLogout} className="text-light px-2" to="/#">Sign Out</Link>
-    </ul>
+    <Fragment>
+      <ul className="m-0">
+        <Link className="text-light px-2" to="/">View Notes</Link>
+        <Link className="text-light px-2" to="/addnote">Add Note</Link>
+        <Link onClick={onLogout} className="text-light px-2" to="/#">Sign Out</Link>
+      </ul>
+    </Fragment>
   );
 
   const linksForGuest = (
-    <ul className="m-0">
-      <Link className="text-light px-2" to="/signup">Sign Up</Link>
-      <Link className="text-light px-2" to="/signin">Sign In</Link>
-    </ul>
+    <Fragment>
+      <ul className="m-0">
+        <Link className="text-light px-2" to="/signup">Sign Up</Link>
+        <Link className="text-light px-2" to="/signin">Sign In</Link>
+      </ul>
+    </Fragment>
   );
 
   return (

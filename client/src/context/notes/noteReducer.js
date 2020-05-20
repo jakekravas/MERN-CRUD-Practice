@@ -5,7 +5,7 @@ export default (state, action) => {
         ...state,
         notes: action.payload
       }
-    case "NOTES_ERROR":
+    case "NOTE_ERROR":
       return {
         ...state,
         notes: null,
