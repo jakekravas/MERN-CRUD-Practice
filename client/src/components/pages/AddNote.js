@@ -1,13 +1,15 @@
 import React, { useEffect, useState, useContext } from 'react';
 import NoteContext from "../../context/notes/noteContext";
+import AuthContext from "../../context/auth/authContext";
 
 const AddNote = props => {
   const noteContext = useContext(NoteContext);
+  const authContext = useContext(AuthContext);
   const { addNote, getNotes, notes } = noteContext;
 
-  // useEffect(() => {
-  //   props.history.push("/");
-  // }, [notes]);
+  useEffect(() => {
+    authContext.loadUser();
+  }, []);
 
   const [newNote, setNewNote] = useState({
     title: "",
@@ -32,27 +34,35 @@ const AddNote = props => {
   }
 
   return (
-    <form onSubmit={onSubmit}>
-      <div className="form-group">
-        <label>Title</label>
-        <input 
-          type="text"
-          name="title"
-          value={title}
-          onChange={onChange}
-        />
+    <div className="row">
+      <div className="col-md-4 mx-auto mt-4">
+        <div className="card text-center card-auth">
+          <form onSubmit={onSubmit}>
+            <div className="form-group">
+              <input 
+                type="text"
+                placeholder="Title"
+                name="title"
+                value={title}
+                onChange={onChange}
+                />
+            </div>
+            <div className="form-group">
+              <textarea
+                name="content"
+                cols="30"
+                rows="10"
+                placeholder="Content"
+                value={content}
+                onChange={onChange}
+              >
+              </textarea>
+            </div>
+            <button type="submit" className="auth-btn">Add Note</button>
+          </form>
+        </div>
       </div>
-      <div className="form-group">
-        <label>Content</label>
-        <input 
-          type="text"
-          name="content"
-          value={content}
-          onChange={onChange}
-        />
-      </div>
-      <button type="submit">Add Note</button>
-    </form>
+    </div>
   )
 }
 
