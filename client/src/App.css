@@ -11,3 +11,35 @@ body{
 .card-body{
   padding: 10px;
 }
+
+.card-auth{
+  padding: 0;
+  margin: 0;
+}
+
+.auth-header{
+  margin-top: 20px;
+  margin-bottom: 16px;
+  color: #343a40;
+}
+
+.auth-inp{
+  border: none;
+  border-bottom: 1px solid #343a40;
+  /* background-color: blue; */
+}
+
+.auth-btn {
+  background-color: #343a40;
+  color: #f6f6f6;
+  border-radius: 5px;
+  border: none;
+  margin-top: 16px;
+  margin-bottom: 20px;
+  padding: 5px 10px;
+}
+
+.auth-p {
+  /* margin-top: 20px; */
+  /* margin-bottom: 20px; */
+}

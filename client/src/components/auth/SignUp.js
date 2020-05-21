@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { Link } from "react-router-dom";
 import AuthContext from "../../context/auth/authContext";
 
 const SignUp = props => {
@@ -35,36 +36,47 @@ const SignUp = props => {
   }
 
   return (
-    <form onSubmit={submitUser}>
-      <div className="form-group">
-        <label>Name</label>
-        <input
-          type="text"
-          name="name"
-          value={ name }
-          onChange={inputChange}
-        />
+    <div className="row">
+      <div className="col-md-4 mx-auto mt-4">
+        <div className="card text-center card-auth">
+          <h4 className="auth-header">Sign Up</h4>
+          <form onSubmit={submitUser}>
+            <div className="form-group">
+              <input
+                className="auth-inp"
+                type="text"
+                placeholder="Name"
+                name="name"
+                value={ name }
+                onChange={inputChange}
+                />
+            </div>
+            <div className="form-group">
+              <input
+                className="auth-inp"
+                type="text"
+                placeholder="Email"
+                name="email"
+                value={ email }
+                onChange={inputChange}
+                />
+            </div>
+            <div className="form-group">
+              <input
+                className="auth-inp"
+                type="password"
+                placeholder="Password"
+                name="password"
+                value={ password }
+                onChange={inputChange}
+              />
+            </div>
+            <button type="submit" className="auth-btn">Sign Up</button>
+          </form>
+          <p className="auth-p">Already have an account? Sign in <Link to="/signin">here</Link></p>
+        </div>
       </div>
-      <div className="form-group">
-        <label>Email</label>
-        <input
-          type="text"
-          name="email"
-          value={ email }
-          onChange={inputChange}
-        />
-      </div>
-      <div className="form-group">
-        <label>Password</label>
-        <input
-          type="password"
-          name="password"
-          value={ password }
-          onChange={inputChange}
-        />
-      </div>
-      <button type="submit">Sign Up</button>
-    </form>
+    </div>
   )
 }
 
