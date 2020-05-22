@@ -70,4 +70,36 @@ router.delete("/:id", auth, async (req, res) => {
   }
 })
 
+// @route    PUT api/notes
+// @desc     Edit a note
+// @access   Private
+router.put("/:id", auth, async (req, res) => {
+  const { title, content } = req.body;
+  
+  const noteFields = {};
+  if (title) noteFields.title = title;
+  if (content) noteFields.content = content;
+
+  try {
+    let note = await Note.findById(req.params.id);
+
+    if (!note) return res.status(400).json({ msg: "Note not found" })
+
+    // Ensuring user property of note matches up with id of logged in user
+    if (note.user.toString() !== req.user.id){
+      return res.status(401).json({ msg: "Not authorized" });
+    }
+    note = await Note.findByIdAndUpdate(
+      req.params.id,
+      {$set: noteFields},
+      {new: true}
+    );
+
+    res.json(note);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+})
+
 module.exports = router;

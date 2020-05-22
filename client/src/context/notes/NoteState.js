@@ -6,6 +6,7 @@ import noteReducer from "./noteReducer";
 const NoteState = props => {
   const initialState = {
     notes: null,
+    current: null,
     error: null
   }
 
@@ -61,16 +62,54 @@ const NoteState = props => {
         payload: err.response.msg
       });
     }
+  };
+
+  const updateNote = async note => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }
+
+    try {
+      const res = await axios.put(`/api/notes/${note._id}`, note, config);
+      dispatch({
+        type: "UPDATE_NOTE",
+        payload: res.data
+      })
+    } catch (err) {
+      dispatch({
+        type: "NOTE_ERRR",
+        payload: err.response.msg
+      })
+    }
   }
+
+  const setCurrent = note => {
+    dispatch({
+      type: "SET_CURRENT",
+      payload: note
+    })
+  };
+
+  const clearCurrent = () => {
+    dispatch({
+      type: "CLEAR_CURRENT"
+    })
+  };
 
   return (
     <NoteContext.Provider
       value={{
         notes: state.notes,
+        current: state.current,
         error: state.error,
         getNotes,
         addNote,
-        deleteNote
+        deleteNote,
+        updateNote,
+        setCurrent,
+        clearCurrent
       }}
     >
       {props.children}
